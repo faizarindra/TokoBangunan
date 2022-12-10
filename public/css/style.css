@@ -7597,7 +7597,7 @@ textarea.form-control {
 }
 
 .ps-widget--account-dashboard .ps-widget__content ul li a:hover {
-  background-color: #fcb800;
+  background-color: #dd2400;
   color: #fff;
 }
 
@@ -7606,7 +7606,7 @@ textarea.form-control {
 }
 
 .ps-widget--account-dashboard .ps-widget__content ul li.active {
-  background-color: #fcb800;
+  background-color: #dd2400;
 }
 
 .ps-widget--account-dashboard .ps-widget__content ul li.active a {
@@ -8360,6 +8360,8 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 
 .ps-product .ps-product__thumbnail img {
   width: 100%;
+  height: 175px;
+  object-fit: cover;
 }
 
 .ps-product .ps-product__thumbnail .ps-product__actions {
@@ -8371,6 +8373,15 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 
 .ps-product .ps-product__content > p {
   color: #000;
+}
+
+.ps-alamat .ps-alamat__content > p {
+    color: #000;
+}
+
+.ps-alamat .ps-alamat__price.sale {
+    color: #f30;
+    margin-bottom: 0px;
 }
 
 .ps-product .ps-product__content.hover {
@@ -8385,6 +8396,26 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   visibility: hidden;
   opacity: 0;
 }
+
+.ps-alamat .ps-alamat__content.hover {
+    position: absolute;
+    top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 89%;
+    padding: 20px;
+    border: 1px solid silver;
+    visibility: hidden;
+    opacity: 0;
+    background-color: white;
+    height: 100%;
+    min-height: 200px;
+  }
+
+.ps-alamat .ps-alamat__container {
+    padding-top: 10px;
+  }
 
 .ps-product .ps-product__container {
   padding-top: 10px;
@@ -8414,6 +8445,19 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   visibility: visible;
   opacity: 1;
 }
+
+.ps-alamat:hover .ps-alamat__content {
+    visibility: hidden;
+    opacity: 0;
+    height: 0;
+  }
+
+  .ps-alamat:hover .ps-alamat__content.hover {
+    height: auto;
+    visibility: visible;
+    opacity: 1;
+    transition: ease all 0.5s;
+  }
 
 .ps-product:hover.ps-product--inner {
   border: none;
@@ -11186,7 +11230,9 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 }
 
 .ps-table--shopping-cart tbody tr td .ps-product--cart {
-  max-width: 500px;
+  /* max-width: 500px; */
+  /* max-width: 250PX; */
+  width: 250px;
 }
 
 .ps-table--shopping-cart tbody tr td:last-child {

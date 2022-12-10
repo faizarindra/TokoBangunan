@@ -22,6 +22,7 @@ class TokoSeeder extends Seeder
                 'nama_toko' => 'Berkah Jaya',
                 'gambar_toko' => 'berkah.jpg',
                 'alamat_toko' => 'Jl. MT. Haryono, Dinoyo',
+                'deskripsi_toko' => 'Toko ini menjual berbagai macam bahan bangunan dan peralatan',
                 'latitude' => '-7.9442633',
                 'longitude' => '112.5965558',
                 'prefix' => Str::random(10),

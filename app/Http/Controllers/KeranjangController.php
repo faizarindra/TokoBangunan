@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alamat;
 use App\Models\Keranjang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -149,5 +150,29 @@ class KeranjangController extends Controller
                 'data' => []
             ]);
         }
+    }
+
+    public function index()
+    {
+        $auth = Auth::user();
+        $carts = Keranjang::select('toko.id as id_toko', 'toko.nama_toko as nama_toko', 'toko.gambar_toko as gambar_toko')
+            ->where('keranjang.id_user', $auth->id)
+            ->join('produk', 'keranjang.id_produk', 'produk.id')
+            ->join('toko', 'produk.id_toko', 'toko.id')
+            ->groupBy('toko.id')
+            ->get();
+        $carts = $carts->map(function ($crt) {
+            $crt['products'] = Keranjang::select('keranjang.*', 'produk.*')
+                ->where('produk.id_toko', $crt->id_toko)
+                ->join('produk', 'keranjang.id_produk', 'produk.id')
+                ->get();
+            $crt['products'] = $crt['products']->map(function ($prd) {
+                $prd['total'] = $prd->harga_produk * $prd->qty;
+                return $prd;
+            });
+            return $crt;
+        });
+        $alamats = Alamat::where('id_user', $auth->id)->get();
+        return view('keranjang', compact('carts', 'alamats'));
     }
 }

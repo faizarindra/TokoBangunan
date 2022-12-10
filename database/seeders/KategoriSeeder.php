@@ -18,14 +18,17 @@ class KategoriSeeder extends Seeder
         Kategori::insert([
             [
                 'nama_kategori' => 'Semen',
+                'image' => 'semen.jpg',
                 'prefix' => 'semen'
             ],
             [
                 'nama_kategori' => 'Cat Tembok',
+                'image' => 'cat.jpg',
                 'prefix' => 'cat-tembok'
             ],
             [
                 'nama_kategori' => 'Peralatan Tukang',
+                'image' => 'peralatan-tukang.png',
                 'prefix' => 'peralatan-tukang'
             ]
         ]);

@@ -45,7 +45,9 @@
                             <h3 class="widget-title">Kategori</h3>
                             <ul class="ps-list--arrow">
                                 @foreach ($categories as $category)
-                                    <li><a href="#">{{ $category->nama_kategori }}</a></li>
+                                    <li><a
+                                            href="{{ url('kategori/' . $category->prefix) }}">{{ $category->nama_kategori }}</a>
+                                    </li>
                                 @endforeach
                             </ul>
                         </aside>
