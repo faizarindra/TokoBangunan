@@ -1,5 +1,7 @@
 @extends('profile.layouts.main')
 
+@section('title', 'Edit Alamat')
+
 @section('content_user')
     <form class="ps-form--account-setting" action="{{ url('profile/alamat') }}" method="POST" autocomplete="off">
         @csrf
@@ -80,6 +82,15 @@
                         <label>Kode Pos</label>
                         <input class="form-control" type="text" placeholder="Masukkan Kode Pos" name="kode_pos"
                             value="{{ $alamat->kode_pos }}">
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch1" name="is_main"
+                                value="{{ $alamat->is_main }}" @if ($alamat->is_main == 1) checked @endif>
+                            <label class="custom-control-label" for="customSwitch1">Jadikan Alamat Utama?</label>
+                        </div>
                     </div>
                 </div>
             </div>

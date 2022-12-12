@@ -23,5 +23,6 @@ class Alamat extends Model
         'id_kecamatan',
         'nama_kecamatan',
         'kode_pos',
+        'is_main'
     ];
 }

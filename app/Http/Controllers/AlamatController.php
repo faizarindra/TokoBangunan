@@ -35,6 +35,7 @@ class AlamatController extends Controller
     public function tambahAlamatAction(Request $request)
     {
         $auth = Auth::user();
+        $is_main = $request->has('is_main') ? 1 : 0;
         $request->validate([
             'nama_penerima' => 'required',
             'no_hp' => 'required',
@@ -52,6 +53,10 @@ class AlamatController extends Controller
             'alamat.required' => 'Alamat harus diisi',
             'kode_pos.required' => 'Kode pos harus diisi',
         ]);
+        $mainAlamat = Alamat::where('id_user', $auth->id)->where('is_main', 1)->first();
+        if ($mainAlamat && $is_main == 1) {
+            Alamat::where('id_user', $auth->id)->where('is_main', 1)->update(['is_main' => 0]);
+        }
         $request['id_user'] = $auth->id;
         $request['id_provinsi'] = explode('#', $request->provinsi)[0];
         $request['nama_provinsi'] = explode('#', $request->provinsi)[1];
@@ -59,6 +64,7 @@ class AlamatController extends Controller
         $request['nama_kota'] = explode('#', $request->kota)[1];
         $request['id_kecamatan'] = explode('#', $request->kecamatan)[0];
         $request['nama_kecamatan'] = explode('#', $request->kecamatan)[1];
+        $request['is_main'] = $is_main;
         Alamat::create($request->all());
         return redirect()->route('alamat-user')->with('success', 'Berhasil menambah alamat');
     }
@@ -88,7 +94,12 @@ class AlamatController extends Controller
     public function editAlamatAction(Request $request)
     {
         $id = $request->id;
+        $is_main = $request->has('is_main') ? 1 : 0;
         $auth = Auth::user();
+        $mainAlamat = Alamat::where('id_user', $auth->id)->where('is_main', 1)->first();
+        if ($mainAlamat && $is_main == 1) {
+            Alamat::where('id_user', $auth->id)->where('is_main', 1)->update(['is_main' => 0]);
+        }
         $request['id_user'] = $auth->id;
         $request['id_provinsi'] = explode('#', $request->provinsi)[0];
         $request['nama_provinsi'] = explode('#', $request->provinsi)[1];
@@ -96,6 +107,7 @@ class AlamatController extends Controller
         $request['nama_kota'] = explode('#', $request->kota)[1];
         $request['id_kecamatan'] = explode('#', $request->kecamatan)[0];
         $request['nama_kecamatan'] = explode('#', $request->kecamatan)[1];
+        $request['is_main'] = $is_main;
         unset($request['provinsi']);
         unset($request['kota']);
         unset($request['kecamatan']);

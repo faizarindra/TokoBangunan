@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alamat;
+use App\Models\Produk;
 use App\Models\Toko;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 class WilayahController extends Controller
@@ -76,14 +78,19 @@ class WilayahController extends Controller
     public function getOngkir(Request $request)
     {
         $request = (object) $request->json()->all();
-        $alamat = Alamat::find($request->id_alamat)->first();
         $dataKeranjang = $request->data;
         $dataKeranjang = json_decode(json_encode($dataKeranjang));
-        $dataKeranjang = array_map(function ($item) {
-            $alamat_asal = Alamat::where('id', $item->id_alamat)->first();
+        $keranjang = $request->keranjang;
+        $id_user = $request->id_user;
+        $id_alamat = $request->id_alamat;
+        $dataKeranjang = array_map(function ($item) use ($id_alamat, $id_user) {
+            $alamat_asal = Alamat::where('id', $id_alamat)->first();
             $district_toko = Toko::where('id', $item->id_toko)->first();
             $sum_products = array_sum(array_map(function ($item) {
                 return $item->qty;
+            }, $item->products));
+            $sum_harga = array_sum(array_map(function ($item) {
+                return $item->harga;
             }, $item->products));
             $response = Http::withHeaders([
                 'key' => $this->RajaOngkirKey
@@ -92,17 +99,35 @@ class WilayahController extends Controller
                 'originType' => 'subdistrict',
                 'destination' => $district_toko->id_kecamatan,
                 'destinationType' => 'subdistrict',
-                'weight' => $sum_products * 1000,
+                'weight' => 1000,
                 'courier' => 'jnt'
             ]);
             $data = json_decode($response->body(), false);
             $data = $data->rajaongkir->results;
+            $products = collect($item->products);
             return [
+                'id_user' => $id_user,
+                'id_toko' => $district_toko->id,
+                'id_alamat' => (int)$id_alamat,
                 'nama_toko' => $district_toko->nama_toko,
                 'ongkir' => $data[0]->costs[0]->cost[0]->value,
+                'total_harga' => $sum_harga,
+                'total' => $sum_harga + $data[0]->costs[0]->cost[0]->value,
+                'products' => $products->map(function ($item) {
+                    return [
+                        'id_produk' => $item->id_produk,
+                        'qty' => $item->qty,
+                        'harga' => $item->harga,
+                        'total' => $item->qty * $item->harga
+                    ];
+                })
             ];
         }, $dataKeranjang);
-        // return $dataKeranjang;
+
+        $dataKeranjang = array(
+            'keranjang' => $keranjang,
+            'data' => $dataKeranjang,
+        );
         return $this->customResponse(true, 'Berhasil mengambil data ongkir', $dataKeranjang);
     }
 }

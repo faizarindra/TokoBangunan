@@ -742,6 +742,8 @@
     <script src="{{ asset('/js/sticky-sidebar.min.js') }}"></script>
     <script src="{{ asset('/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('/js/main.js') }}"></script>
+    <script src="{{ asset('js/cryptojs-aes.min.js') }}"></script>
+    <script src="{{ asset('js/cryptojs-aes-format.js') }}"></script>
     <script>
         $(document).ready(function() {
             $("#btn-search").click(function() {

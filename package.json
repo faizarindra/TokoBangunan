@@ -23,6 +23,7 @@
         "sass-loader": "^11.0.1"
     },
     "dependencies": {
+        "crypto-js": "^4.1.1",
         "jquery": "^3.6.1",
         "popper.js": "^1.16.1"
     }

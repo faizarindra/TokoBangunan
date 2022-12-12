@@ -162,7 +162,7 @@ class KeranjangController extends Controller
             ->groupBy('toko.id')
             ->get();
         $carts = $carts->map(function ($crt) {
-            $crt['products'] = Keranjang::select('keranjang.*', 'produk.*')
+            $crt['products'] = Keranjang::select('keranjang.*', 'keranjang.id as id_keranjang', 'produk.*')
                 ->where('produk.id_toko', $crt->id_toko)
                 ->join('produk', 'keranjang.id_produk', 'produk.id')
                 ->get();
