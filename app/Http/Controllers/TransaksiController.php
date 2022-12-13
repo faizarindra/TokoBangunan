@@ -29,7 +29,8 @@ class TransaksiController extends Controller
             3 => 'Dikirim Ke Alamat',
             4 => 'Selesai',
             5 => 'Dibatalkan',
-            6 => 'Pembayaran Kadaluarsa'
+            6 => 'Pembayaran Kadaluarsa',
+            7 => 'Ditolak Toko'
         ];
 
         $this->statusMidtrans = [

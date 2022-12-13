@@ -3,12 +3,6 @@
 @section('title', 'Pesanan')
 
 @section('content_user')
-
-    @extends('profile.layouts.main')
-
-@section('title', 'Notifikasi')
-
-@section('content_user')
     <div class="ps-shopping-product">
         <div class="ps-form--account-setting">
             <div class="ps-form__header">
@@ -57,9 +51,20 @@
                                         <span class="badge badge-danger">Pesanan Dibatalkan</span>
                                     @elseif ($pesanan->status == 6)
                                         <span class="badge badge-danger">Pesanan Kadaluarsa</span>
+                                    @elseif ($pesanan->status == 7)
+                                        <span class="badge badge-danger">Pesanan Ditolak Toko</span>
                                     @endif
                                 </td>
-                                <td>
+                                <td class="text-right">
+                                    @if ($pesanan->status == 3)
+                                        <form action="{{ url('profile/pesanan/selesai') }}" method="POST"
+                                            id="pesanan-selesai-{{ $pesanan->id }}">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{ $pesanan->id }}">
+                                        </form>
+                                        <a onclick="event.preventDefault(); document.getElementById('pesanan-selesai-{{ $pesanan->id }}').submit();"
+                                            class="btn btn-sm btn-primary btn-rounded">Pesanan Diterima</a>
+                                    @endif
                                     <a href="{{ url('profile/pesanan?detail=' . $pesanan->id) }}"
                                         class="btn btn-sm btn-danger btn-rounded">Detail</a>
                                 </td>
@@ -77,6 +82,4 @@
             {{ $pesanans->links() }}
         </div>
     </div>
-@endsection
-
 @endsection

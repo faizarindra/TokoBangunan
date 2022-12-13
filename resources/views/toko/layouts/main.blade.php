@@ -278,11 +278,19 @@
                                             class="{{ Request::is('seller/produk') || Request::is('seller/tambah-produk') ? 'active' : '' }}">
                                             <a href="{{ url('seller/produk') }}"><i class="icon-bag"></i> Produk</a>
                                         </li>
-                                        <li><a href="#"><i class="icon-cashier"></i> Penjualan Saya</a></li>
+                                        <li class="{{ Request::is('seller/penjualan') ? 'active' : '' }}"><a
+                                                href="{{ url('seller/penjualan') }}">
+                                                <i class="icon-cashier"></i> Penjualan Saya</a>
+                                        </li>
                                         <li
-                                            class="{{ Request::is('profile/alamat') || Request::is('profile/tambah-alamat') ? 'active' : '' }}">
-                                            <a href="{{ url('profile/alamat') }}"><i class="icon-cash-dollar"></i>
+                                            class="{{ Request::is('seller/rekening') || Request::is('seller/tambah-rekening') ? 'active' : '' }}">
+                                            <a href="{{ url('seller/rekening') }}"><i class="icon-credit-card"></i>
                                                 Rekening
+                                                Saya</a>
+                                        </li>
+                                        <li class="{{ Request::is('seller/saldo') ? 'active' : '' }}">
+                                            <a href="{{ url('seller/saldo') }}"><i class="icon-bag-dollar"></i>
+                                                Saldo
                                                 Saya</a>
                                         </li>
                                         <li class="{{ Request::is('seller/edit-toko') ? 'active' : '' }}">

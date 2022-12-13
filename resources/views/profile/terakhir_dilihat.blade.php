@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="row">
-            @foreach ($terakhir_dilihats as $product)
+            @forelse ($terakhir_dilihats as $product)
                 <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-6">
                     <div class="ps-product">
                         <div class="ps-product__thumbnail">
@@ -53,7 +53,13 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
+            @empty
+                <div class="col-md-12">
+                    <div class="alert alert-danger text-center" role="alert">
+                        <i class="fa fa-exclamation-triangle mr-2"></i> Tidak ada produk
+                    </div>
+                </div>
+            @endforelse
         </div>
     </div>
 @endsection

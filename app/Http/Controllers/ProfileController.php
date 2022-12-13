@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Notifikasi;
 use App\Models\Pembayaran;
+use App\Models\Saldo;
 use App\Models\TerakhirDilihat;
 use App\Models\Transaksi;
 use App\Models\TransaksiItem;
@@ -136,5 +137,17 @@ class ProfileController extends Controller
             return $pembayaran;
         });
         return view('profile.pembayaran', compact('auth', 'pembayarans'));
+    }
+
+    public function selesaiPesanan(Request $request)
+    {
+        $transaksi = Transaksi::find($request->id);
+        $transaksi->status = 4;
+        $transaksi->save();
+
+        $saldo = Saldo::where('id_toko', $transaksi->id_toko)->first();
+        $saldo->status = 1;
+        $saldo->save();
+        return redirect()->back()->with('success', 'Pesanan telah diterima');
     }
 }
