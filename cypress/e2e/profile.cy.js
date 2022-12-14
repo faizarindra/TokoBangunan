@@ -1,0 +1,16 @@
+describe('empty spec', () => {
+  it('passes', () => {
+    cy.visit('http://127.0.0.1:8000/login')
+    cy.get('#email').type('hilmy@gmail.com')
+    cy.get('#password').type('hilmy123')
+    cy.get('#sign-in > .ps-form__content > .submtit > .ps-btn').click()
+    cy.get('.header__content-right > .header__actions > .ps-block--user-header > .ps-block__right > a').click()
+    cy.get('.ps-form__content > :nth-child(1) > .form-control').clear().type('hilmy')
+    cy.get(':nth-child(1) > .form-group > .form-control').clear().type('hilmy123')
+    cy.get(':nth-child(2) > .form-group > .form-control').clear().type('0812345678922')
+    cy.get(':nth-child(3) > .form-group > .form-control').clear().type('hilmy@gmail.com')
+    cy.get('.row > :nth-child(4) > .form-group > .form-control').type('2022-12-14')
+    cy.get(':nth-child(5) > .form-group > .form-control').select(1)
+    cy.get('.submit > .ps-btn').click()
+  })
+})
