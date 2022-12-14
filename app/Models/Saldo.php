@@ -15,6 +15,7 @@ class Saldo extends Model
         'nominal',
         'tanggal_selesai',
         'status',
+        'is_cair',
     ];
     protected $dates = [
         'created_at',

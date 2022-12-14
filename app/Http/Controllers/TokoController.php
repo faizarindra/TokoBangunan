@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bank;
 use App\Models\Kategori;
 use App\Models\Merk;
 use App\Models\Produk;
+use App\Models\Rekening;
 use App\Models\Saldo;
 use App\Models\Toko;
 use App\Models\Transaksi;
@@ -469,5 +471,111 @@ class TokoController extends Controller
         $transaksi->save();
         //todo add resi
         return redirect()->back()->with('success', 'Pesanan berhasil dikirim');
+    }
+
+    public function saldo()
+    {
+        $id = Auth::user()->id;
+        $toko = Toko::where('id_user', $id)->first();
+        $saldos = Saldo::select('saldo.*', 'transaksi.kode')
+            ->leftJoin('transaksi', 'transaksi.id', '=', 'saldo.id_transaksi')
+            ->where('saldo.id_toko', $toko->id)
+            ->orderBy('saldo.id', 'desc')
+            ->paginate(5);
+
+        $tertahan = Saldo::where('id_toko', $toko->id)->where('status', 0)->sum('nominal');
+        $tersedia = Saldo::where('id_toko', $toko->id)->where('status', 1)->where('is_cair', 0)->sum('nominal');
+        $dicairkan = Saldo::where('id_toko', $toko->id)->where('status', 99)->sum('nominal');
+
+        $saldo = new Collection();
+        $saldo->tertahan = $tertahan;
+        $saldo->tersedia = $tersedia;
+        $saldo->dicairkan = $dicairkan;
+        return view('toko.saldo', compact('saldos', 'saldo'));
+    }
+
+    public function rekening()
+    {
+        $id = Auth::user()->id;
+        $toko = Toko::where('id_user', $id)->first();
+        $rekenings = Rekening::select('rekening.*', 'bank.nama', 'bank.logo')
+            ->join('bank', 'bank.id', 'rekening.id_bank')
+            ->where('id_toko', $toko->id)
+            ->paginate(8);
+        return view('toko.rekening.index', compact('rekenings'));
+    }
+
+    public function tambahRekening()
+    {
+        $banks = Bank::all();
+        return view('toko.rekening.tambah', compact('banks'));
+    }
+
+    public function tambahRekeningAction(Request $request)
+    {
+        $id = Auth::user()->id;
+        $toko = Toko::where('id_user', $id)->first();
+        $request->validate(
+            [
+                'atas_nama' => 'required',
+                'no_rekening' => 'required',
+                'id_bank' => 'required',
+                'cabang' => 'required',
+            ],
+            [
+                'atas_nama.required' => 'Nama pemilik rekening harus diisi',
+                'no_rekening.required' => 'Nomor rekening harus diisi',
+                'id_bank.required' => 'Bank harus diisi',
+                'cabang.required' => 'Cabang harus diisi',
+            ]
+        );
+        Rekening::create([
+            'id_toko' => $toko->id,
+            'id_bank' => $request->id_bank,
+            'atas_nama' => $request->atas_nama,
+            'no_rekening' => $request->no_rekening,
+            'cabang' => $request->cabang,
+        ]);
+        return redirect()->route('rekening-toko')->with('success', 'Rekening berhasil ditambahkan');
+    }
+
+    public function editRekening($id)
+    {
+        $id = Crypt::decrypt($id);
+        $rekening = Rekening::find($id);
+        $banks = Bank::all();
+        return view('toko.rekening.edit', compact('rekening', 'banks'));
+    }
+
+    public function editRekeningAction(Request $request)
+    {
+        $request->validate(
+            [
+                'atas_nama' => 'required',
+                'no_rekening' => 'required',
+                'id_bank' => 'required',
+                'cabang' => 'required',
+            ],
+            [
+                'atas_nama.required' => 'Nama pemilik rekening harus diisi',
+                'no_rekening.required' => 'Nomor rekening harus diisi',
+                'id_bank.required' => 'Bank harus diisi',
+                'cabang.required' => 'Cabang harus diisi',
+            ]
+        );
+        $rekening = Rekening::find($request->id);
+        $rekening->id_bank = $request->id_bank;
+        $rekening->atas_nama = $request->atas_nama;
+        $rekening->no_rekening = $request->no_rekening;
+        $rekening->cabang = $request->cabang;
+        $rekening->save();
+        return redirect()->route('rekening-toko')->with('success', 'Rekening berhasil diubah');
+    }
+
+    public function hapusRekening($id)
+    {
+        $rekening = Rekening::find($id);
+        $rekening->delete();
+        return redirect()->back()->with('success', 'Rekening berhasil dihapus');
     }
 }

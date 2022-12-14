@@ -65,5 +65,12 @@ Route::prefix('seller')->middleware('auth')->group(function () {
         Route::post('penjualan/acc', [\App\Http\Controllers\TokoController::class, 'accPenjualan']);
         Route::post('penjualan/tolak', [\App\Http\Controllers\TokoController::class, 'tolakPenjualan']);
         Route::post('penjualan/kirim', [\App\Http\Controllers\TokoController::class, 'kirimPenjualan']);
+        Route::get('saldo', [\App\Http\Controllers\TokoController::class, 'saldo'])->name('saldo-toko');
+        Route::get('rekening', [\App\Http\Controllers\TokoController::class, 'rekening'])->name('rekening-toko');
+        Route::get('tambah-rekening', [\App\Http\Controllers\TokoController::class, 'tambahRekening']);
+        Route::post('tambah-rekening', [\App\Http\Controllers\TokoController::class, 'tambahRekeningAction']);
+        Route::get('rekening/{id}', [\App\Http\Controllers\TokoController::class, 'editRekening']);
+        Route::patch('rekening', [\App\Http\Controllers\TokoController::class, 'editRekeningAction']);
+        Route::delete('rekening/{id}', [\App\Http\Controllers\TokoController::class, 'hapusRekening']);
     });
 });

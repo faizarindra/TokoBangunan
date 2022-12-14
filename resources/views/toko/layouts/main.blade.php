@@ -294,7 +294,7 @@
                                                 Saya</a>
                                         </li>
                                         <li class="{{ Request::is('seller/edit-toko') ? 'active' : '' }}">
-                                            <a target="blank" href="{{ url('seller/edit-toko') }}"><i
+                                            <a href="{{ url('seller/edit-toko') }}"><i
                                                     class="icon-store"></i>
                                                 Edit Toko
                                                 Saya</a>
