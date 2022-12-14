@@ -64,5 +64,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'cek.toko' => \App\Http\Middleware\CekToko::class,
+        'testing' => \App\Http\Middleware\TestingRoutes::class
     ];
 }

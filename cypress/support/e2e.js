@@ -14,6 +14,7 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
+<<<<<<< HEAD
 import './commands'
 Cypress.on("uncaught:exception", (err, runnable) => {
     return false;
@@ -23,3 +24,15 @@ Cypress.config('defaultCommandTimeout', 10000);
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+=======
+import "./commands";
+
+// Alternatively you can use CommonJS syntax:
+// require('./commands')
+
+Cypress.on("uncaught:exception", (err, runnable) => {
+    // returning false here prevents Cypress from
+    // failing the test
+    return false;
+});
+>>>>>>> e898e6d6defce4691a6f337b5b6d1e613d1ea7b4

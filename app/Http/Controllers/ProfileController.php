@@ -147,6 +147,7 @@ class ProfileController extends Controller
 
         $saldo = Saldo::where('id_toko', $transaksi->id_toko)->first();
         $saldo->status = 1;
+        $saldo->tanggal_selesai = date('Y-m-d H:i:s');
         $saldo->save();
         return redirect()->back()->with('success', 'Pesanan telah diterima');
     }

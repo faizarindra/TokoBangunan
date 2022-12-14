@@ -22,4 +22,21 @@
 //
 //
 // -- This will overwrite an existing command --
+<<<<<<< HEAD
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+=======
+// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+/**
+ * Login helper function.
+ */
+Cypress.Commands.add("login", () => cy.request("/_testing/login"));
+
+/**
+ * Create model factory:
+ * ex: baseUrl/_testing/create?model=User
+ */
+Cypress.Commands.add("create", (model) => {
+    return cy.request("/_testing/create?model=" + model).its("body");
+});
+>>>>>>> e898e6d6defce4691a6f337b5b6d1e613d1ea7b4

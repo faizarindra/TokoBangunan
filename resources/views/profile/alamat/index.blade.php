@@ -62,8 +62,10 @@
                     {{ $alamats->links() }}
                 </div>
             @empty
-                <div class="alert alert-warning">
-                    Anda belum memiliki alamat
+                <div class="col-md-12">
+                    <div class="alert alert-danger text-center" role="alert">
+                        <i class="fa fa-exclamation-triangle mr-2"></i> Belum ada alamat yang disimpan
+                    </div>
                 </div>
             @endforelse
         </div>
