@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('id_toko');
             $table->integer('id_transaksi');
             $table->string('nominal');
-            $table->dateTime('tanggal_selesai');
+            $table->dateTime('tanggal_selesai')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
         });

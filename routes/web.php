@@ -74,3 +74,10 @@ Route::prefix('seller')->middleware('auth')->group(function () {
         Route::delete('rekening/{id}', [\App\Http\Controllers\TokoController::class, 'hapusRekening']);
     });
 });
+
+
+//cypress
+
+Route::prefix('_testing')
+    ->middleware(['testing'])
+    ->group(__DIR__ . '/_testing.php');

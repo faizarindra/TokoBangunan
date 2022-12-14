@@ -10,5 +10,5 @@ class Merk extends Model
     use HasFactory;
 
     protected $table = 'merk';
-    protected $fillable = ['id_kategori', 'nama_merk', 'prefix'];
+    protected $fillable = ['id_kategori', 'nama_merk', 'prefix', 'image'];
 }
