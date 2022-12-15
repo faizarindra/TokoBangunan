@@ -24,3 +24,5 @@ Cypress.on("uncaught:exception", (err, runnable) => {
     // failing the test
     return false;
 });
+
+Cypress.config("defaultCommanTimeOut", 10000);
