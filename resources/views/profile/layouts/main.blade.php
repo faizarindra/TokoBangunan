@@ -45,7 +45,7 @@
                                             href="{{ url('profile/terakhir-dilihat') }}"><i class="icon-eye"></i> Terakhir
                                             Dilihat</a></li>
                                     <li>
-                                        <a target="blank" href="{{ url('seller') }}"><i class="icon-store"></i>
+                                        <a target="" href="{{ url('seller') }}"><i class="icon-store"></i>
                                             Toko
                                             Saya</a>
                                     </li>
