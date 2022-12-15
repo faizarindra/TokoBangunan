@@ -25,8 +25,4 @@ Cypress.on("uncaught:exception", (err, runnable) => {
     return false;
 });
 
-<<<<<<< HEAD
-Cypress.config("defaultCommandTimeout", 10000);
-=======
 Cypress.config("defaultCommanTimeOut", 10000);
->>>>>>> 08d942f3fa4da11c3fab2079147f3308ceab348c
